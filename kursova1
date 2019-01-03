@@ -1,1 +1,99 @@
-k
+/*
+	Задача 21:
+	Да се състави блок схема и програма, която чете C програма и намира:
+		~ броят на коментарите в програмата
+		~ броят на операторите в програмата
+	
+	Програмата да започва с меню със следните опции:
+		~ четене програмата от файл и запис на резултата във файл
+		  (потребителят трябва да въведе имената на двата файла, като файла с програмата трябва да завършва на ".с")
+		~ четене програмта от файл и извеждане на резултата на екрана (файлът въведен от потрбителя трябва да звършва на ".с")
+		~ четене на програмата от клавиатура и извеждането на файл зададен от потребителя
+		~ четене на програмата от клавиатурата и извеждане на екрана
+	Програмата да се реализира в отделни функции. Четенето от файла става по редове.
+
+*/
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include <stdbool.h>
+
+#include<Windows.h>
+
+
+
+int main() {
+
+	char ch, file_name[300];
+	FILE *fp;
+	int count_operators = 0;
+	int count_comments = 0;
+	boolean comment = false;
+
+	printf("Enter name of a file you wish to see\n");
+	gets(file_name);
+	fp = fopen(file_name, "r"); // read mode
+	
+	if (fp == NULL)
+	{
+		perror("Error while opening the file.\n");
+		exit(EXIT_FAILURE);
+	}
+	printf("The contents of %s file are:\n", file_name);
+
+
+	while ((ch = fgetc(fp)) != EOF) {
+		printf("%c", ch);
+		switch (ch) {
+		case '+': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '-': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '=': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '*': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else if (ch == '/' && comment == true) { count_comments++; comment = false; }
+				  else count_operators++; }
+
+		case '/': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else if (ch == '/') count_comments++;
+				  else if (ch == '*') comment = true;
+				  else count_operators++; }
+
+		case '<': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '>': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '&': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '|': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '?': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		case '!': { if ((ch = fgetc(fp)) == '-' || '=' || '*' || '/' || '<' || '>' || '&' || '|' || '?' || '!')count_operators++;
+				  else count_operators++; }
+
+		}
+
+	}
+
+	printf("\n Broi operatori %d", count_operators);
+	printf("\n Broi komentari %d", count_comments);
+
+	fclose(fp);
+
+	return 0;
+
+}
