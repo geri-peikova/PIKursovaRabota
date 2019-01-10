@@ -110,7 +110,7 @@ int main() {
 			printf("Брой оператори: %d\n", count_operators);
 			break;
 	}
-
+	system("pause");
 	return 0;
 
 
@@ -154,8 +154,13 @@ int countOperators(char text[], int count_operators){
 				i++;
 			}
 		}
-		else if(text[i]=='/' && text[i+1]=='*'){
+		if(text[i]=='/' && text[i+1]=='*'){
 			while(text[i]!='*' && text[i+1]!='/'){
+				i++;
+			}
+		}
+		if(text[i]=='"'){
+			while(text[i]!='"'){
 				i++;
 			}
 		}
@@ -211,4 +216,5 @@ int countOperators(char text[], int count_operators){
 }
 
 //C:\Users\35988\eclipse-workspace\text\text.c
+
 
