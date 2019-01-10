@@ -21,6 +21,10 @@
 #include<stdbool.h>
 #include<Windows.h>
 
+int prMenu(int choice);
+int countComments(char text[], int count_comments);
+int countOperators(char text[], int count_operators);
+
 int main() {
 
 	SetConsoleOutputCP(1251);
@@ -34,7 +38,7 @@ int main() {
 		case 1:
 			printf("Име на файла за четене: \n");
 			fflush(stdout);
-			scanf("%s", &file_name);
+			scanf("%s", file_name);
 			file1=fopen(file_name,"r");
 			if (file1) {
 					while ((c = getc(file1)) != EOF){
@@ -50,7 +54,7 @@ int main() {
 
 			printf("Име на файла за писане: \n");
 			fflush(stdout);
-			scanf("%s", &file_name);
+			scanf("%s", file_name);
 			file2=fopen(file_name,"w");
 			fprintf(file2,"Брой коментари: %d\n", count_comments);
 			fprintf(file2, "Брой оператори: %d\n", count_operators);
@@ -60,7 +64,7 @@ int main() {
 		case 2:
 			printf("Име на файла за четене: \n");
 			fflush(stdout);
-			scanf("%s", &file_name);
+			scanf("%s", file_name);
 			file1=fopen(file_name,"r");
 			if (file1) {
 					while ((c = getc(file1)) != EOF){
@@ -81,7 +85,7 @@ int main() {
 		case 3:
 			printf("Име на файла за писане: \n");
 			fflush(stdout);
-			scanf("%s", &file_name);
+			scanf("%s", file_name);
 			file2=fopen(file_name,"w");
 
 			printf("Въведете текст: \n");
@@ -145,6 +149,17 @@ int countOperators(char text[], int count_operators){
 	int check = 0;
 	for(int i=0; i<strlen(text); i++){
 
+		if(text[i]=='/' && text[i+1]=='/'){
+			while(text[i]!='\n'){
+				i++;
+			}
+		}
+		else if(text[i]=='/' && text[i+1]=='*'){
+			while(text[i]!='*' && text[i+1]!='/'){
+				i++;
+			}
+		}
+
 		if(text[i]=='d' && text[i+1]=='o'){
 			i++;
 			if(text[i]==' ' && text[i+1]=='{'){
@@ -181,6 +196,14 @@ int countOperators(char text[], int count_operators){
 		else if(text[i]=='c' && text[i+1]=='o' && text[i+2]=='n' && text[i+3]=='t' && text[i+4]=='i' && text[i+5]=='n' && text[i+6]=='u' && text[i+7]=='e' && text[i+8]==';'){
 			i+=8;
 			count_operators++;
+		}
+		else if(text[i]=='b' && text[i+1]=='r' && text[i+2]=='e' && text[i+3]=='a' && text[i+4]=='k' && text[i+5]==';'){
+			count_operators++;
+			i+=5;
+		}
+		else if(text[i]=='c' && text[i+1]=='a' && text[i+2]=='s' && text[i+3]=='e' && text[i+4]==' '){
+			count_operators++;
+			i+=4;
 		}
 	}
 
